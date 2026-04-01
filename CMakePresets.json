@@ -10,7 +10,7 @@
       "name": "dev",
       "displayName": "Development",
       "description": "Default build using debug options",
-      "binaryDir": "${sourceDir}/build",
+      "binaryDir": "${sourceDir}/build/debug",
       "generator": "Ninja",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
@@ -25,7 +25,7 @@
       "name": "release",
       "displayName": "Release",
       "description": "Default build using release options",
-      "binaryDir": "${sourceDir}/build",
+      "binaryDir": "${sourceDir}/build/release",
       "generator": "Ninja",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
