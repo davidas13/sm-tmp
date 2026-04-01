@@ -1,7 +1,33 @@
+#include <_regex.h>
 #include <mpv/client.h>
+#include <regex.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+bool is_url(const char *url)
+{
+    regex_t regex;
+
+    // Credit: https://stackoverflow.com/a/38608262/8403177
+    const char *regex_pattern =
+        "^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w "
+        "\\.-]*)*\\/?";
+
+    int regex_compile =
+        regcomp(&regex, regex_pattern, REG_EXTENDED | REG_NOSUB);
+
+    if (regex_compile != 0)
+    {
+        fprintf(stderr, "Failed to compile regex pattern.\n");
+
+        return false;
+    }
+
+    int regex_execute = regexec(&regex, url, 0, NULL, 0);
+
+    return regex_execute == 0;
+}
 
 int main(int argc, const char *argv[])
 {
@@ -13,6 +39,13 @@ int main(int argc, const char *argv[])
     }
 
     const char *yt_url = argv[1];
+
+    if (!is_url(yt_url))
+    {
+        fprintf(stderr, "Invalid url.\n");
+
+        return EXIT_FAILURE;
+    }
 
     mpv_handle *mpv = mpv_create();
 
