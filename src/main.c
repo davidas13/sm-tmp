@@ -3,6 +3,9 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 bool is_url(const char *url)
 {
@@ -28,6 +31,27 @@ bool is_url(const char *url)
     return regex_execute == 0;
 }
 
+bool is_filepath(const char *filepath)
+{
+    struct stat PathInfo;
+
+    if (stat(filepath, &PathInfo) != 0)
+    {
+        fprintf(stderr, "Failed to stat file.\n");
+
+        return false;
+    }
+
+    if (PathInfo.st_mode & S_IFDIR)
+    {
+        fprintf(stderr, "Filepath is a directory.\n");
+
+        return false;
+    }
+
+    return true;
+}
+
 int main(int argc, const char *argv[])
 {
     if (argc < 2)
@@ -37,11 +61,11 @@ int main(int argc, const char *argv[])
         return EXIT_FAILURE;
     }
 
-    const char *yt_url = argv[1];
+    const char *filepath_or_yt_url = argv[1];
 
-    if (!is_url(yt_url))
+    if (!is_url(filepath_or_yt_url) && !is_filepath(filepath_or_yt_url))
     {
-        fprintf(stderr, "Invalid url.\n");
+        fprintf(stderr, "Invalid filepath or url.\n");
 
         return EXIT_FAILURE;
     }
@@ -64,7 +88,7 @@ int main(int argc, const char *argv[])
         return EXIT_FAILURE;
     }
 
-    const char *command[] = {"loadfile", yt_url, NULL};
+    const char *command[] = {"loadfile", filepath_or_yt_url, NULL};
 
     if (mpv_command(mpv, command) < 0)
     {
