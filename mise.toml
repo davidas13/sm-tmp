@@ -2,4 +2,29 @@
 cmake = "latest"
 ninja = "latest"
 
+[tasks.cmake]
+run = "mise x cmake -- cmake"
 
+[tasks."dev-clean"]
+run = "rm -rf ./build/debug"
+
+[tasks."dev-configure"]
+run = "mise run cmake --preset dev"
+
+[tasks."dev-build"]
+run = "mise run cmake --build --preset dev"
+
+[tasks."dev-run"]
+run = "./build/debug/sm-tmp"
+
+[tasks."release-clean"]
+run = "rm -rf ./build/release"
+
+[tasks."release-configure"]
+run = "mise run cmake --preset release"
+
+[tasks."release-build"]
+run = "mise run cmake --build --preset release"
+
+[tasks."release-run"]
+run = "./build/release/sm-tmp"
