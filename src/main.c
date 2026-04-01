@@ -106,7 +106,8 @@ int main(int argc, const char *argv[])
     {
         mpv_event *p_mpv_event = mpv_wait_event(p_mpv, -1);
 
-        if (p_mpv_event->event_id == MPV_EVENT_SHUTDOWN)
+        if (p_mpv_event->event_id == MPV_EVENT_SHUTDOWN ||
+            p_mpv_event->event_id == MPV_EVENT_END_FILE)
         {
             break;
         }
