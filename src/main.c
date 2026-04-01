@@ -3,9 +3,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void)
+int main(int argc, const char *argv[])
 {
-    // Create hello world mpv client
+    if (argc < 2)
+    {
+        fprintf(stderr, "You must pass a url argument.\n");
+
+        return EXIT_FAILURE;
+    }
+
+    const char *yt_url = argv[1];
+
     mpv_handle *mpv = mpv_create();
 
     if (!mpv)
@@ -23,8 +31,6 @@ int main(void)
 
         return EXIT_FAILURE;
     }
-
-    const char *yt_url = "https://www.youtube.com/watch?v=wDchsz8nmbo";
 
     const char *command[] = {"loadfile", yt_url, NULL};
 
@@ -49,7 +55,6 @@ int main(void)
         }
     }
 
-    // Shutdown
     mpv_terminate_destroy(mpv);
 
     printf("Player close.\n");
