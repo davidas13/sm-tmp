@@ -62,10 +62,9 @@ int main(int argc, const char* argv[])
         return EXIT_FAILURE;
     }
 
-    const char* p_sz_filepath_or_yt_url = argv[1];
+    const char* p_sz_filepath_or_url = argv[1];
 
-    if (!is_url(p_sz_filepath_or_yt_url) &&
-        !is_filepath(p_sz_filepath_or_yt_url))
+    if (!is_url(p_sz_filepath_or_url) && !is_filepath(p_sz_filepath_or_url))
     {
         fprintf(stderr, "Invalid filepath or url.\n");
 
@@ -90,7 +89,7 @@ int main(int argc, const char* argv[])
         return EXIT_FAILURE;
     }
 
-    const char* p_a_command[] = {"loadfile", p_sz_filepath_or_yt_url, NULL};
+    const char* p_a_command[] = {"loadfile", p_sz_filepath_or_url, NULL};
 
     if (mpv_command(p_mpv, p_a_command) < 0)
     {
