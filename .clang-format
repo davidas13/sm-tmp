@@ -3,3 +3,6 @@ BreakBeforeBraces: Allman
 IndentWidth: 4
 IndentCaseLabels: true
 ColumnLimit: 80
+PointerAlignment: Left 
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true

@@ -8,12 +8,12 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-bool is_url(const char *sz_url)
+bool is_url(const char* sz_url)
 {
     regex_t regex;
 
     // Credit: https://stackoverflow.com/a/38608262/8403177
-    const char *p_regex_pattern =
+    const char* p_regex_pattern =
         "^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w "
         "\\.-]*)*\\/?";
 
@@ -32,7 +32,7 @@ bool is_url(const char *sz_url)
     return regex_execute == 0;
 }
 
-bool is_filepath(const char *sz_filepath)
+bool is_filepath(const char* sz_filepath)
 {
     struct stat PathInfo;
 
@@ -53,7 +53,7 @@ bool is_filepath(const char *sz_filepath)
     return true;
 }
 
-int main(int argc, const char *argv[])
+int main(int argc, const char* argv[])
 {
     if (argc < 2)
     {
@@ -62,7 +62,7 @@ int main(int argc, const char *argv[])
         return EXIT_FAILURE;
     }
 
-    const char *sz_filepath_or_yt_url = argv[1];
+    const char* sz_filepath_or_yt_url = argv[1];
 
     if (!is_url(sz_filepath_or_yt_url) && !is_filepath(sz_filepath_or_yt_url))
     {
@@ -71,7 +71,7 @@ int main(int argc, const char *argv[])
         return EXIT_FAILURE;
     }
 
-    mpv_handle *p_mpv = mpv_create();
+    mpv_handle* p_mpv = mpv_create();
 
     if (!p_mpv)
     {
@@ -89,7 +89,7 @@ int main(int argc, const char *argv[])
         return EXIT_FAILURE;
     }
 
-    const char *a_command[] = {"loadfile", sz_filepath_or_yt_url, NULL};
+    const char* a_command[] = {"loadfile", sz_filepath_or_yt_url, NULL};
 
     if (mpv_command(p_mpv, a_command) < 0)
     {
@@ -104,7 +104,7 @@ int main(int argc, const char *argv[])
 
     while (true)
     {
-        mpv_event *p_mpv_event = mpv_wait_event(p_mpv, -1);
+        mpv_event* p_mpv_event = mpv_wait_event(p_mpv, -1);
 
         if (p_mpv_event->event_id == MPV_EVENT_SHUTDOWN ||
             p_mpv_event->event_id == MPV_EVENT_END_FILE)
