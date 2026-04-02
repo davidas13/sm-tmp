@@ -8,17 +8,17 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-bool is_url(const char* sz_url)
+bool is_url(const char* p_sz_url)
 {
     regex_t regex;
 
     // Credit: https://stackoverflow.com/a/38608262/8403177
-    const char* p_regex_pattern =
+    const char* p_sz_regex_pattern =
         "^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w "
         "\\.-]*)*\\/?";
 
     int regex_compile =
-        regcomp(&regex, p_regex_pattern, REG_EXTENDED | REG_NOSUB);
+        regcomp(&regex, p_sz_regex_pattern, REG_EXTENDED | REG_NOSUB);
 
     if (regex_compile != 0)
     {
@@ -27,23 +27,23 @@ bool is_url(const char* sz_url)
         return false;
     }
 
-    int regex_execute = regexec(&regex, sz_url, 0, NULL, 0);
+    int regex_execute = regexec(&regex, p_sz_url, 0, NULL, 0);
 
     return regex_execute == 0;
 }
 
-bool is_filepath(const char* sz_filepath)
+bool is_filepath(const char* p_sz_filepath)
 {
-    struct stat PathInfo;
+    struct stat path_info;
 
-    if (stat(sz_filepath, &PathInfo) != 0)
+    if (stat(p_sz_filepath, &path_info) != 0)
     {
         fprintf(stderr, "Failed to stat file.\n");
 
         return false;
     }
 
-    if (PathInfo.st_mode & S_IFDIR)
+    if (path_info.st_mode & S_IFDIR)
     {
         fprintf(stderr, "Filepath is a directory.\n");
 
@@ -62,9 +62,10 @@ int main(int argc, const char* argv[])
         return EXIT_FAILURE;
     }
 
-    const char* sz_filepath_or_yt_url = argv[1];
+    const char* p_sz_filepath_or_yt_url = argv[1];
 
-    if (!is_url(sz_filepath_or_yt_url) && !is_filepath(sz_filepath_or_yt_url))
+    if (!is_url(p_sz_filepath_or_yt_url) &&
+        !is_filepath(p_sz_filepath_or_yt_url))
     {
         fprintf(stderr, "Invalid filepath or url.\n");
 
@@ -89,9 +90,9 @@ int main(int argc, const char* argv[])
         return EXIT_FAILURE;
     }
 
-    const char* a_command[] = {"loadfile", sz_filepath_or_yt_url, NULL};
+    const char* p_a_command[] = {"loadfile", p_sz_filepath_or_yt_url, NULL};
 
-    if (mpv_command(p_mpv, a_command) < 0)
+    if (mpv_command(p_mpv, p_a_command) < 0)
     {
         fprintf(stderr, "Failed to run loadfile command.\n");
 
