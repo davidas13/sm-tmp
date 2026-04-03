@@ -108,8 +108,6 @@ int main(int argc, const char* argv[])
         return EXIT_FAILURE;
     }
 
-    printf("Video playing...\n");
-
     while (true)
     {
         mpv_event* p_mpv_event = mpv_wait_event(p_mpv, -1);
@@ -122,8 +120,6 @@ int main(int argc, const char* argv[])
     }
 
     mpv_terminate_destroy(p_mpv);
-
-    printf("Player close.\n");
 
     return EXIT_SUCCESS;
 }
