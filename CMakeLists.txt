@@ -23,9 +23,10 @@ if (NOT MPV_FOUND)
     message(FATAL_ERROR "Could not find mpv")
 endif()
 
-add_executable(sm-tmp src/main.c)
+add_executable(sm-tmp src/main.c src/utils.c)
 
 target_link_libraries(sm-tmp PRIVATE PkgConfig::MPV)
 
-target_compile_features(sm-tmp PRIVATE c_std_11)
+target_include_directories(sm-tmp PRIVATE src)
 
+target_compile_features(sm-tmp PRIVATE c_std_11)
