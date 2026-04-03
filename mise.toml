@@ -16,6 +16,7 @@ run = "mise run cmake --build --preset dev"
 
 [tasks."dev-run"]
 run = "./build/debug/sm-tmp"
+depends = ["dev-build"]
 
 [tasks."release-clean"]
 run = "rm -rf ./build/release"
