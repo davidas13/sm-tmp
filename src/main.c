@@ -80,6 +80,14 @@ int main(int argc, const char* argv[])
         return EXIT_FAILURE;
     }
 
+    mpv_set_option_string(p_mpv, "terminal", "yes");
+    mpv_set_option_string(p_mpv, "input-terminal", "yes");
+    mpv_set_option_string(p_mpv, "input-default-bindings", "no");
+    mpv_set_option_string(p_mpv, "msg-level", "cplayer=no,display-tags=no");
+    mpv_set_option_string(p_mpv, "term-osd-bar", "yes");
+    mpv_set_option_string(p_mpv, "term-status-msg", "${filename}");
+    mpv_set_option_string(p_mpv, "term-osd-bar-chars", "[━●━]");
+
     if (mpv_initialize(p_mpv) < 0)
     {
         fprintf(stderr, "Failed to intialize mpv instance.\n");
